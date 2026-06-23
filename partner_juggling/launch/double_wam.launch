@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="hand_tracking" default="false"/>
+
+    <arg name="rviz_config" default="$(find partner_juggling)/rviz/double_wam_partner_juggling.rviz"/>
+
+	<arg name="simulate_optitrack" default="false"/>
+
+    <arg name="dof" default="4"/>
+	<arg name="sim" default="real"/>
+    <param name="sim" value="$(arg sim)"/>
+
+	<arg name="mj_render" default="false"/>
+	<arg name="mj_model_cables" default="false"/>
+
+
+    <arg name="mj_tf__mj_body_names" default="[balls/ball0,balls/ball1, balls/ball2, balls/ball3]"/>  <!-- list of body names to publish as tf frames -->
+    <arg name="mj_tf__tf_frame_names" default="[tf_ball0, tf_ball1, tf_ball2, tf_ball3]"/>        <!-- names under which to publish the frames -->
+
+    <arg name="armature_scale" default="1.0"/>
+    <arg name="friction_scale" default="1.0"/>
+    <arg name="damping_scale" default="1.0"/>
+    <arg name="model_motor_currents" default="true"/>
+
+	<arg name="controller" default="joint_trajectory_controller_LinearDerivatives_PDFFID"/>
+	
+	<arg name="x_tilt_left" default="0"/>
+    <arg name="y_tilt_left" default="0"/>
+    <arg name="length_left" default="0.24"/>
+
+	<arg name="dof_left" default="$(arg dof)"/>
+	<arg name="robot_name_left" default="wam_left"/>
+	<arg name="armature_scale_left" default="$(arg armature_scale)"/>
+	<arg name="friction_scale_left" default="$(arg friction_scale)"/>
+	<arg name="damping_scale_left" default="$(arg damping_scale)"/>
+	<arg name="mj_model_motor_currents_left" default="$(arg model_motor_currents)"/>
+    <arg name="controller_yaml_left" default="$(find wam_controllers)/config/wam$(arg dof_left)_controllers.yaml"/>
+    <arg name="controller_left" default="$(arg controller)"/>
+
+
+    <arg name="x_tilt_right" default="-0.261799"/>
+	<arg name="y_tilt_right" default="0.261799"/>
+
+
+    <arg name="length_right" default="0.15"/>
+
+	<arg name="dof_right" default="$(arg dof)"/>
+	<arg name="robot_name_right" default="wam_right"/>
+	<arg name="armature_scale_right" default="$(arg armature_scale)"/>
+	<arg name="friction_scale_right" default="$(arg friction_scale)"/>
+	<arg name="damping_scale_right" default="$(arg damping_scale)"/>
+	<arg name="mj_model_motor_currents_right" default="$(arg model_motor_currents)"/>
+    <arg name="controller_yaml_right" default="$(find wam_controllers)/config/wam$(arg dof_right)_controllers.yaml"/>
+    <arg name="controller_right" default="$(arg controller)"/>
+
+	<arg name="urdf_xacro" default="$(find juggling_wam_description)/robot_description/xacro/robots/double_juggling_wam.urdf.xacro"/>
+	<arg name="xacro_kwargs" default=""/>
+	<arg name="mj_xml_file" default="$(find juggling_wam_description)/robot_description/mujoco/robots/juggling_wam__double_$(arg dof)dof__barrett_inertia.xml"/>
+
+    <include file="$(find wam_bringup)/launch/double_wam.launch">
+		<arg name="sim" value="$(arg sim)"/>
+		<arg name="mj_render" value="$(arg mj_render)"/>
+		<arg name="urdf_xacro" value="$(arg urdf_xacro)"/>
+		<arg name="mj_xml_file" value="$(arg mj_xml_file)"/>
+		<arg name="dof" value="4"/>
+
+		<arg name="mj_model_cables" value="$(arg mj_model_cables)"/>
+	    <arg name="mj_custom_frames_yaml" default="$(find wam_description)/mujoco/config/frames_double_wam.yaml"/>
+		<arg name="mj_tf__mj_body_names" value="$(arg mj_tf__mj_body_names)"/>
+		<arg name="mj_tf__tf_frame_names" value="$(arg mj_tf__tf_frame_names)"/>
+
+		<arg name="barrett_cart_vel_fault_limit" value="6.0"/>
+		<arg name="barrett_cart_vel_warn_limit" value="3.0"/>
+		<arg name="hw_interface_torque_limit_scale" value="5.0"/>
+
+		<arg name="robot_name_left" value="$(arg robot_name_left)"/>
+		<arg name="armature_scale_left" value="$(arg armature_scale_left)"/>
+		<arg name="friction_scale_left" value="$(arg friction_scale_left)"/>
+		<arg name="damping_scale_left" value="$(arg damping_scale_left)"/>
+		<arg name="mj_model_motor_currents_left" value="$(arg mj_model_motor_currents_left)"/>
+		<arg name="controller_left" value="$(arg controller_left)"/>
+		<arg name="controller_yaml_left" value="$(arg controller_yaml_left)"/>
+
+		<arg name="robot_name_right" value="$(arg robot_name_right)"/>
+		<arg name="armature_scale_right" value="$(arg armature_scale_right)"/>
+		<arg name="friction_scale_right" value="$(arg friction_scale_right)"/>
+		<arg name="damping_scale_right" value="$(arg damping_scale_right)"/>
+		<arg name="mj_model_motor_currents_right" value="$(arg mj_model_motor_currents_right)"/>
+		<arg name="controller_right" value="$(arg controller_right)"/>
+		<arg name="controller_yaml_right" value="$(arg controller_yaml_right)"/>
+
+        <arg name="rviz_config" default="$(arg rviz_config)"/>
+
+		<arg name="xacro_kwargs" value="$(arg xacro_kwargs) x_tilt_left:=$(arg x_tilt_left) y_tilt_left:=$(arg y_tilt_left) length_left:=$(arg length_left) x_tilt_right:=$(arg x_tilt_right) y_tilt_right:=$(arg y_tilt_right) length_right:=$(arg length_right)"/>
+
+
+	</include>
+
+
+	<!-- load config -->
+	<rosparam file="$(find partner_juggling)/config/config.yaml" />
+
+	<!-- launch optitrack  -->
+	<include file="$(find partner_juggling)/launch/optitrack.launch">
+		<arg name="simulate_optitrack" value="$(arg simulate_optitrack)"/>
+	</include>
+
+	<!-- launch partner juggling related nodes -->
+	<include file="$(find partner_juggling)/launch/sub_processes.launch"> 
+		<arg name="simulate_optitrack" value="$(arg simulate_optitrack)"/>
+		<arg name="hand_tracking" value="$(arg hand_tracking)"/>
+	</include>
+
+
+
+</launch>

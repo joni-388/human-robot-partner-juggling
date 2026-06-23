@@ -1,0 +1,35 @@
+
+cone_angle_deg: 27.0  
+
+torque_max: [180, 100, 70, 45]
+torque_min: [-180, -100, -70, -45]
+torque_limit_factor: 0.5
+
+ddq_min: [-30.0, -60.0, -60.0, -70.0]
+ddq_max: [30.0, 60.0, 60.0, 70.0]
+ddq_factor: 3.0
+
+use_dq_ddq_limits: False
+dq_min: [-4.5, -15.0, -15.0, -15.0]
+dq_max: [4.5, 15.0, 15.0, 15.0]
+
+DDDQ_LIMIT: 100000.0
+
+x_0_offset: [0.0, 0.0, 0.0]
+
+target_pos: [0.8, 1.0, 0.1]
+
+flight_time: 1.4
+t_min: 1.0
+t_max: 1.4
+
+nb_discretization_points_throw: 15
+nb_discretization_points_stop: 10
+nb_discretization_points_catch: 10
+
+duration_throw: 0.4
+duration_stop: 0.3
+min_duration_catch: 0.3
+
+post_take_off_idx: 4
+

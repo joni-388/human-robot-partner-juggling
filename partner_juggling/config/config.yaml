@@ -1,0 +1,25 @@
+
+FIXED_Z_PLANE: 0.57  # Fixed z plane for the ball tracker
+n_balls: 4  # Number of balls to track
+n_hands: 1  # Number of hands to track
+
+# Safety box
+safety_boxes: 
+  - min: [-0.21, -0.21, 0.0]
+    max: [0.21, 0.21, 1.5]
+  - min: [-0.3, -0.3, 0.0]
+    max: [0.3, 0.3, 0.35]
+  - min: [-0.375, -0.375, 0.0]
+    max: [0.375, 0.375, 0.15]
+
+
+fake_human_hand_box:
+  sim:
+    side:
+      - [-2.0, 2.0]
+      - [0.05, 2.0]
+      - [0.0, 1.5]
+  real:
+    - [-2.0, 2.0]
+    - [0.05, 2.0]
+    - [0.0, 1.5]

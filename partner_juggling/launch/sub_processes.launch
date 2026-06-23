@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+        <arg name="simulate_optitrack" default="false"/>
+        <arg name="hand_tracking" default="true"/>
+
+        <!-- main nodes -->
+        <node name="optitrack_ball_tracker" pkg="partner_juggling" type="optitrack_ball_tracker_node.py" output="screen" respawn="true"> </node>
+        
+        <node name="catch_server" pkg="partner_juggling" type="catch_server_node.py" output="screen" required="true" ></node>
+
+        <node name="ball_interaction_manager"
+                pkg="partner_juggling"
+                type="ball_interaction_manager_node.py"
+                output="screen"
+                required="true">
+                
+        <!-- Set a parameter inside the node -->
+        <param name="hand_tracking" value="$(arg hand_tracking)" />
+        </node>
+
+
+        <node name="optitrack_hand_tracker" pkg="partner_juggling" type="optitrack_hand_tracker_node.py" output="screen" respawn="true" if="$(eval hand_tracking)"> </node>
+
+
+        <!-- visualizer nodes -->
+        <node name="ball_visualizer" pkg="partner_juggling" type="ballStates_visualizer.py" output="screen" > </node>
+
+        <node name="natnet_visualizer" pkg="partner_juggling" type="natnet_visualizer.py" output="screen" > </node>
+
+        <node name="safety_box_visualizer" pkg="partner_juggling" type="safety_boxes_visualizer.py" output="screen" > </node>   
+
+        <node name="catch_area_visualizer_node" pkg="partner_juggling" type="catch_area_visualizer.py" output="screen" ></node>
+
+        <node name="hand_visualizer" pkg="partner_juggling" type="handStates_visualizer.py" output="screen" if="$(eval hand_tracking)" > </node>   
+
+        <node name="fake_human_hand_bbox_visualizer" pkg="partner_juggling" type="fake_human_hand_bbox_visualizer.py" output="screen" if="$(eval not hand_tracking)" ></node>
+
+        <node name="interaction_states_hud_visualizer" pkg="partner_juggling" type="interaction_states_hud_visualizer.py" output="screen" ></node>
+</launch>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="simulate_optitrack" default="false"/>
+
+    <!-- tf transform world to optitrack -->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_optitrack_broadcaster" args="0.41762 -0.40481 0.00 0.5 -0.5 -0.5 0.5 world optitrack_custom 10" if="$(eval not simulate_optitrack)" />
+   
+    <!-- tf transform world to optitrack if simulated-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_optitrack_broadcaster" args="0 0 0 0 0 0 world optitrack_custom 10" if="$(eval simulate_optitrack)"/>
+
+    <!-- if optitrack should be simulated publish tf in natnet -->
+    <node name="publish_ball_tf" pkg="partner_juggling" type="publish_ball_tf.py" output="screen" required="true" if="$(eval simulate_optitrack)">
+    </node>
+
+    <!-- else start natnet_bridge for real optitrack -->
+    <include file="$(find natnet_bridge)/launch/natnet_bridge.launch" if="$(eval not simulate_optitrack)" />
+    
+    <!-- if optitrack should be simulated publish tf in fake -->
+    <node name="publish_ball_tf_fake" pkg="partner_juggling" type="publish_ball_states_fake.py" output="screen" required="true" if="$(eval simulate_optitrack)">
+    </node>
+
+</launch>

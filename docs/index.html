@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Human-Robot Partner Juggling project website">
-  <meta name="keywords" content="Robotics, Human-Robot Interaction, Juggling, Collaboration">
+  <meta name="keywords" content="Robotics, Human-Robot Interaction, Juggling, Collaboration, Optimization">
 
-  <title>Human-Robot Partner Juggling</title>
+  <title>Catch, Throw, Repeat: Planning for Human–Robot Partner Juggling</title>
 
   <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -21,19 +21,27 @@
     .section { padding-top: 2rem; padding-bottom: 2rem; }
     .author-block { display: inline-block; margin: 0 0.5rem; }
   </style>
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
 </head>
 <body>
 
 <!-- Header -->
 <section class="hero is-primary">
   <div class="hero-body has-text-centered">
-    <h1 class="title">Human-Robot Partner Juggling</h1>
-    <h2 class="subtitle">Master's Thesis Project</h2>
+    <h1 class="title">Catch, Throw, Repeat: Planning for Human–Robot Partner Juggling</h1>
+    <!-- <h2 class="subtitle">Master's Thesis Project</h2> -->
   </div>
 </section>
 
 <!-- Authors -->
-<section class="section has-text-centered">
+<!-- <section class="section has-text-centered">
   <div class="content">
     <h2 class="title is-4">Authors</h2>
     <div class="authors">
@@ -48,27 +56,73 @@
       <span class="author-block"><sup>1</sup>University XYZ, Department of Robotics</span>
     </div>
   </div>
+</section> -->
+
+<!-- Authors -->
+<section class="section has-text-centered">
+  <div class="content">
+    <h2 class="title is-4">Authors</h2>
+
+    <div class="authors">
+      <span class="author-block">
+        Jonathan Rainer Lippert<sup>1</sup>,
+      </span>
+      <span class="author-block">
+        Kai Ploeger<sup>1</sup>,
+      </span>
+      <span class="author-block">
+        Abir Chowdhury<sup>2</sup>,
+      </span>
+      <span class="author-block">
+        Alap Kshirsagar<sup>1</sup>,
+      </span>
+      <span class="author-block">
+        Jan Peters<sup>1,3,4,5</sup>
+      </span>
+    </div>
+
+    <div class="affiliations">
+      <span class="author-block"><sup>1</sup>Technical University of Darmstadt</span><br>
+      <span class="author-block"><sup>2</sup>Justus-Liebig University Gießen</span><br>
+      <span class="author-block"><sup>3</sup>German Research Center for AI (DFKI)</span><br>
+      <span class="author-block"><sup>4</sup>Robotics Institute Germany</span><br>
+      <span class="author-block"><sup>5</sup>Hessian.AI</span>
+    </div>
+
+    <p class="is-size-7 mt-2">
+      Corresponding author: <a href="mailto:kai@robot-learning.de">kai@robot-learning.de</a>
+    </p>
+  </div>
 </section>
 
 <!-- Paper / Video / Code Buttons -->
 <section class="section has-text-centered">
   <div class="publication-links">
-    <a href="paper.pdf" class="button is-dark is-rounded">
+    <a href="paper.pdf" class="button is-dark is-rounded" disabled>
       <span class="icon"><i class="fas fa-file-pdf"></i></span>
       <span>Paper</span>
     </a>
-    <a href="https://arxiv.org/abs/XXXX.XXXXX" class="button is-dark is-rounded">
+    <!-- <a href="https://arxiv.org/abs/XXXX.XXXXX" class="button is-dark is-rounded " disabled>
       <span class="icon"><i class="ai ai-arxiv"></i></span>
       <span>arXiv</span>
-    </a>
-    <a href="https://www.youtube.com/embed/VIDEO_ID" class="button is-dark is-rounded">
+    </a> -->
+    <a href="https://youtu.be/AIzoEcWNMzA?si=aoX8nCvKSiBo1-XL" class="button is-dark is-rounded">
       <span class="icon"><i class="fab fa-youtube"></i></span>
       <span>Video</span>
     </a>
-    <a href="#" class="button is-dark is-rounded" disabled>
+    <a href="https://github.com/joni-388/human-robot-partner-juggling" class="button is-dark is-rounded" >
       <span class="icon"><i class="fab fa-github"></i></span>
       <span>Code</span>
     </a>
+  </div>
+</section>
+
+<!-- Teaser Image -->
+<section class="section">
+  <div class="container">
+    <figure class="image">
+      <img src="../partner_3_ball_scene.png" alt="Human-robot partner juggling scene">
+    </figure>
   </div>
 </section>
 
@@ -77,9 +131,19 @@
   <div class="container content">
     <h2 class="title is-3">Abstract</h2>
     <p>
-      This project explores human-robot partner juggling. We design a system where a robot collaborates
-      with a human to juggle objects, optimizing timing, trajectory, and coordination.
-      The approach demonstrates safe and reliable interaction while maintaining performance.
+      Dynamic object exchange between humans and robots remains a challenging problem due to uncertainty in perception, timing, and contact-rich interaction.
+      Human-robot juggling represents a particularly demanding instance of this problem, requiring precise real-time coordination, predictive motion planning with feedback control, and robustness to variability in human motion.
+      Enabling such skills is of interest for advancing physical human-robot interaction and shared autonomy.
+      We present a real-time planning and control architecture for human-robot partner juggling that enables the robot to reliably catch and throw balls in synchronized multi-ball patterns with a human partner.
+      The system integrates predictive ball tracking,
+      adaptive online trajectory optimization using a multiple-shooting formulation,
+      and a state-machine-based coordination logic
+      to enable synchronized multi-ball human-robot partner juggling.
+      In a user study with 8 participants of varying juggling skill from beginner to expert,
+      we demonstrate that our system can achieve three-ball cascades shared between the robot and the human.
+      All participants exceeded previously reported best-case results within a 10 minute test session,
+      with one participant extending the previous record for shared three-ball cascade juggling fivefold to 20 consecutive robot catches,
+      and another participant achieving a 100% success rate with 40 consecutive catches in a single-ball catch-and-return setting.
     </p>
   </div>
 </section>
@@ -89,15 +153,13 @@
   <div class="container">
     <h2 class="title is-3 has-text-centered">Project Demo</h2>
     <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/AIzoEcWNMzA?si=S-9zPBpEHh-3tISp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
   </div>
 </section>
 
 <!-- Figures / Gallery -->
-<section class="section">
+<!-- <section class="section">
   <div class="container content">
     <h2 class="title is-3">Results / Figures</h2>
     <div class="columns is-multiline">
@@ -118,26 +180,26 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- Citation -->
-<section class="section">
+<!-- <section class="section">
   <div class="container content">
     <h2 class="title is-3">BibTeX</h2>
     <pre><code>@article{YourName2026Juggling,
   author    = {Your Name and Supervisor Name},
   title     = {Human-Robot Partner Juggling},
-  journal   = {Master's Thesis, University XYZ},
+  journal   = {Confrence, University XYZ},
   year      = {2026},
 }</code></pre>
   </div>
-</section>
+</section> -->
 
 <!-- Footer -->
 <footer class="footer has-text-centered">
   <div class="content">
     <p>
-      NDA-protected code. Video and paper publicly available.
+      Contact: <a href="mailto:kai@robot-learning.de">kai@robot-learning.de</a>
     </p>
     <p>
       Website template adapted from <a href="https://nerfies.github.io" target="_blank">Nerfies: Deformable Neural Radiance Fields</a>.
